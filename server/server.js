@@ -96,7 +96,7 @@ app.patch('/todos/:id', (req, res) => {
     res.status(400).send();
   });
 
-})
+});
 
 app.listen(port, () => {
   console.log(`Started up at port ${port}`);
