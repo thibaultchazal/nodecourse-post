@@ -1,4 +1,4 @@
-require('config/config');
+require('./config/config');
 
 var express = require('express');
 const bodyParser = require('body-parser');
