@@ -45,10 +45,27 @@ UserSchema.methods.generateAuthToken = function () {
   var access = 'auth';
   var token = jwt.sign({_id: user._id.toHexString(), access}, 'abc123').toString(); //We use ES6 property for access (equivalent to access: access)
 
-  user.tokens.addToSet({access, token}); //updates the user.tokens array;
+  user.tokens.addToSet({access, token}); //add token to the user array; addToSet add but don't update.
 
   return user.save().then(() => {
     return token;
+  });
+};
+
+UserSchema.statics.findByToken = function (token) {
+  var User = this;
+  var decoded;
+
+  try {
+    decoded = jwt.verify(token, 'abc123');
+  } catch (e) {
+    return Promise.reject();
+  }
+
+  return User.findOne({
+    '_id': decoded._id,
+    'tokens.token': token,
+    'tokens.access': 'auth'
   });
 };
 
