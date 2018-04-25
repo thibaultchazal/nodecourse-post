@@ -249,3 +249,6 @@ describe('POST /users', () => {
     .end(done);
   })
 });
+//
+// describe('POST /users/login', () => {
+//   test('should create a user', (done) => {
